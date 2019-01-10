@@ -38,10 +38,10 @@ class MysqlPipeline(object):
 	
 	def process_item(self, item, spider):
 		insert_sql = """
-			insert into jobbole_article(title, url, create_date, fav_nums)
-			values (%s, %s, %s, %s)
+			insert into jobbole_article(url_object_id, title, url, create_date, fav_nums, praise_nums, comment_nums, front_image_url, content, tags, front_image_path)
+			values (%s, %s, %s, %s, %s, %s, %s, %s , %s, %s, %s)
 		"""
-		self.cursor.execute(insert_sql, (item['title'], item['url'], item['create_date'], item['fav_nums']))
+		self.cursor.execute(insert_sql, (item['url_object_id'], item['title'], item['url'], item['create_date'], int(item['fav_nums']), int(item['praise_nums']), int(item['comment_nums']), item['front_image_url'], item['content'], item['tags'], item['front_image_path']))
 		self.conn.commit()
 
 
