@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
-import datetime
-
 import scrapy
-import re
 from scrapy.http import Request
 from urllib import parse
 from ArticleSpider.utils.common import get_md5
