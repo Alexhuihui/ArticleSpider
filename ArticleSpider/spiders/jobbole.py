@@ -4,6 +4,7 @@ import datetime
 import scrapy
 import re
 from scrapy.http import Request
+from scrapy.loader import ItemLoader
 from urllib import parse
 from ArticleSpider.utils.common import get_md5
 
@@ -73,6 +74,10 @@ class JobboleSpider(scrapy.Spider):
 		article_item['fav_nums'] = fav_nums
 		article_item['tags'] = tags
 		article_item['content'] = content
+		
+		# 通过itmeLoader加载item
+		item_loader = ItemLoader(item=JobBoleArticleItem(), response=response)
+		item_loader.add_css()
 		
 		# 跳转到piplines中
 		yield article_item

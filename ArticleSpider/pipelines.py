@@ -10,6 +10,7 @@ from scrapy.pipelines.images import ImagesPipeline
 import codecs
 from scrapy.exporters import JsonItemExporter
 import MySQLdb
+import MySQLdb.cursors
 from twisted.enterprise import adbapi
 
 
