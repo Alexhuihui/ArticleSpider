@@ -9,6 +9,7 @@ import json
 from scrapy.pipelines.images import ImagesPipeline
 import codecs
 from scrapy.exporters import JsonItemExporter
+import MySQLdb
 
 
 class ArticlespiderPipeline(object):
@@ -30,13 +31,27 @@ class JsonWithEncodingPipeline(object):
 		self.file.close()
 
 
+class MysqlPipeline(object):
+	def __init__(self):
+		self.conn = MySQLdb.connect('localhost', 'root', 'qwerty123', 'article_spider', charset='utf8', use_unicode=True)
+		self.cursor = self.conn.cursor()
+	
+	def process_item(self, item, spider):
+		insert_sql = """
+			insert into jobbole_article(title, url, create_date, fav_nums)
+			values (%s, %s, %s, %s)
+		"""
+		self.cursor.execute(insert_sql, (item['title'], item['url'], item['create_date'], item['fav_nums']))
+		self.conn.commit()
+
+
 class JsonExporterPipeline(object):
 	# 调用scrapy提供的json exporter导出json 文件
 	def __init__(self):
 		self.file = open('article.json', 'wb')
 		self.exporter = JsonItemExporter(self.file, encoding='utf-8', ensure_ascii=False)
 		self.exporter.start_exporting()
-		
+	
 	def close_spider(self, spider):
 		self.exporter.finish_exporting()
 		self.file.close()
