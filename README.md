@@ -9,3 +9,6 @@
 ### linux安装mysqlclient之前要做的事
 1. sudo apt-get install libmysqlclient-devsimp
 2. sudo yum install python-devel mysql-devel
+
+
+### 由于知乎登录方式的改变，这章内容以学习scrapy模拟登录为主
