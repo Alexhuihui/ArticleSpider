@@ -26,7 +26,7 @@ class JobboleSpider(scrapy.Spider):
 		
 		next_url = response.xpath('//*[@id="archive"]/div[21]/a[4]/@href').extract_first("")
 		if next_url:
-			yield Request(url=parse.urljoin(response.url, post_url), callback=self.parse)
+			yield Request(url=parse.urljoin(response.url, next_url), callback=self.parse)
 	
 	def parse_detail(self, response):
 		# 提取文章的具体信息
